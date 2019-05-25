@@ -43,8 +43,16 @@ for i in range(0,n_steps-1):
         else:
             psi[:,i+1]=[0,1,0]
 norm=np.sum(np.square(np.abs(psi)),axis=0)
-        
-plt.plot(np.linspace(0,t,num=n_steps),np.square(np.abs(psi[0,:])))
-plt.plot(np.linspace(0,t,num=n_steps),np.square(np.abs(psi[1,:])))
-plt.plot(np.linspace(0,t,num=n_steps),np.square(np.abs(psi[2,:])))
-plt.plot(np.linspace(0,t,num=n_steps),np.square(abs(norm)))
+
+fig = plt.figure(num=1)
+
+ax = fig.add_subplot(111)
+ax.set_ylabel("Population",fontsize=14)
+ax.set_xlabel("Time",fontsize=14)
+ax.plot(np.linspace(0,t,num=n_steps),np.square(np.abs(psi[0,:])), color='red')
+ax.plot(np.linspace(0,t,num=n_steps),np.square(np.abs(psi[1,:])), color='green')
+ax.plot(np.linspace(0,t,num=n_steps),np.square(np.abs(psi[2,:])), color='blue')
+ax.plot(np.linspace(0,t,num=n_steps),norm,color='black', linestyle='dashed')
+ax.legend(('Ground state', 'Intermediate state', 'Excited state', 'Norm'))
+
+fig.suptitle('Single quantum trajectory', fontsize=16)
