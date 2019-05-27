@@ -5,7 +5,7 @@ from scipy.linalg import expm
 %matplotlib notebook
 
 
-n_steps=3000
+n_steps=5000
 delta_t=1e-3
 t=delta_t*n_steps
 n_samples=1000
@@ -13,12 +13,12 @@ n_samples=1000
 omega_e=1
 omega_g=-1
 
-lam12=3
-lam13=3
-lam23=3
-g_21=1.0
-g_31=1.0
-g_32=1.0
+lam12=1
+lam13=2
+lam23=2
+g_21=0.1
+g_31=2
+g_32=0.5
 
 H_eff=np.array([[-omega_g,lam12,lam13],[lam12,-1j*g_21,lam23],[lam13,lam23,omega_e-1j*(g_31+g_32)]])
 #U=np.array([[1,0,0],[0,1,0],[0,0,1]])-1j*H_eff*delta_t
@@ -28,7 +28,7 @@ psi=np.zeros([3,n_steps], dtype=complex)
 psi[:,0]=[0,0,1]
 
 psi_save=np.zeros([3,n_steps,n_samples], dtype=complex)
-psi_save[2,0,:]=np.ones(n_samples)
+
 
 
 #Run over samples
@@ -58,18 +58,19 @@ for j in range(0,n_samples):
                 psi[:,i+1]=[0,1,0]
     psi_save[:,:,j]=psi
     
-state=np.mean(psi_save,axis=2)   
-norm=np.sum(np.square(np.abs(state)),axis=0)
+probs=np.mean(np.square(np.abs(psi_save)),axis=2)    
+#state=np.mean(psi_save,axis=2)   
+#norm=np.sum(np.square(np.abs(state)),axis=0)
 
 fig = plt.figure(num=1)
 
 ax = fig.add_subplot(111)
 ax.set_ylabel("Population",fontsize=14)
 ax.set_xlabel("Time",fontsize=14)
-ax.plot(np.linspace(0,t,num=n_steps),np.square(np.abs(state[0,:])), color='red')
-ax.plot(np.linspace(0,t,num=n_steps),np.square(np.abs(state[1,:])), color='green')
-ax.plot(np.linspace(0,t,num=n_steps),np.square(np.abs(state[2,:])), color='blue')
-ax.plot(np.linspace(0,t,num=n_steps),norm,color='black', linestyle='dashed')
+ax.plot(np.linspace(0,t,num=n_steps),probs[0,:], color='red')
+ax.plot(np.linspace(0,t,num=n_steps),probs[1,:], color='green')
+ax.plot(np.linspace(0,t,num=n_steps),probs[2,:], color='blue')
+#ax.plot(np.linspace(0,t,num=n_steps),norm,color='black', linestyle='dashed')
 ax.legend(('Ground state', 'Intermediate state', 'Excited state', 'Norm'))
 
 fig.suptitle('Ensemble trajectory', fontsize=16)
