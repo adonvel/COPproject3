@@ -40,7 +40,7 @@ for i in range(0,n_steps-1):
         else:
             psi[:,i+1]=[0,1]
         
-inv=(np.square(abs(psi[1,:]))-np.square(abs(psi[0,:])))
+#inv=(np.square(abs(psi[1,:]))-np.square(abs(psi[0,:])))
 norm=np.sum(np.square(np.abs(psi)),axis=0)
 
 fig = plt.figure(num=1)
