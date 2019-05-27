@@ -11,7 +11,7 @@ t=delta_t*n_steps
 n_samples=100
 
 omega_0=2
-beta=0.00001
+beta=0.67
 lam=2
 g_down=20
 #g_up=0
@@ -49,7 +49,6 @@ for j in range(0,n_samples):
                 psi[:,i+1]=[1,0]
             else:
                 psi[:,i+1]=[0,1]
-                print('jump up')
     psi_save[:,:,j]=psi
     
 probs=np.mean(np.square(np.abs(psi_save)),axis=2)    
