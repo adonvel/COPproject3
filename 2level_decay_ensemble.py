@@ -10,12 +10,12 @@ n_samples=1000
 delta_t=1e-4
 t=delta_t*n_steps
 
-omega_0=2
-lam=2
-g=2
+omega_0=1
+lam=0.6
+g=0
 
 
-H_eff=np.array([[-(omega_0+1j*g_up)/2,lam],[lam,(omega_0-1j*g_down)/2]])
+H_eff=np.array([[-(omega_0)/2,lam],[lam,(omega_0-1j*g)/2]])
 U=expm(-1j*H_eff*delta_t)
 psi=np.zeros([2,n_steps,n_samples], dtype=complex)
 psi[1,0,:]=np.ones(n_samples)
